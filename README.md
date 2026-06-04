@@ -1,6 +1,6 @@
-# Presup-factur v001
+# Presup-factur v002
 
-Version actual: `presup-factur-v001`.
+Version actual: `presup-factur-v002`.
 
 Repositorio GitHub: `luciojmartinez-lab/Presup-factur`
 Proyecto Netlify: https://app.netlify.com/projects/presup-factur/overview

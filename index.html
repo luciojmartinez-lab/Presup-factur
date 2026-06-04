@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Presup-factur v001</title>
-  <link rel="stylesheet" href="styles.css?v=001">
+  <title>Presup-factur v002</title>
+  <link rel="stylesheet" href="styles.css?v=002">
 </head>
 <body>
   <main class="app">
@@ -15,7 +15,8 @@
           <p>Rellena los datos, revisa la hoja A4 y guarda como PDF desde imprimir.</p>
         </div>
         <div class="actions">
-          <button type="button" id="newDocBtn" class="secondary">Nuevo nº</button>
+          <button type="button" id="newQuoteBtn" class="secondary">Añadir presupuesto</button>
+          <button type="button" id="newInvoiceBtn" class="secondary">Añadir factura</button>
           <button type="button" id="sampleBtn" class="secondary">Cargar ejemplo</button>
           <button type="button" id="backupBtn" class="secondary">Backup</button>
           <button type="button" id="restoreBtn" class="secondary">Restaurar</button>
@@ -135,7 +136,7 @@
               <input name="bankControl" type="text">
             </label>
             <label>
-              Numero de cuenta
+              Número de cuenta
               <input name="bankAccount" type="text">
             </label>
             <label>
@@ -224,7 +225,7 @@
               <div>Entidad<br><span id="bankEntityPreview"></span></div>
               <div>Oficina<br><span id="bankOfficePreview"></span></div>
               <div>D.C.<br><span id="bankControlPreview"></span></div>
-              <div>Numero de Cuenta<br><span id="bankAccountPreview"></span></div>
+              <div>Número de Cuenta<br><span id="bankAccountPreview"></span></div>
             </div>
             <p class="company-tax" id="companyTaxIdPreview"></p>
           </div>
@@ -253,6 +254,6 @@
     </div>
   </template>
 
-  <script src="app.js?v=001"></script>
+  <script src="app.js?v=002"></script>
 </body>
 </html>
