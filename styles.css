@@ -567,7 +567,8 @@ textarea {
 }
 
 .invoice-footer {
-  font-size: 12px;
+  font-size: 13px;
+  line-height: 1.18;
 }
 
 .invoice-summary,
@@ -577,7 +578,7 @@ textarea {
 }
 
 .invoice-summary {
-  grid-template-columns: 13% 8% 15% 16% 11% 16% 21%;
+  grid-template-columns: 14% 8% 15% 16% 10% 16% 21%;
   min-height: 17mm;
   border-bottom: 0;
 }
@@ -590,9 +591,12 @@ textarea {
 .invoice-summary > div,
 .invoice-payment > div {
   border-right: 2px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   padding: 4px 5px;
   text-align: center;
-  overflow-wrap: anywhere;
+  overflow: hidden;
 }
 
 .invoice-summary > div:last-child,
@@ -600,11 +604,18 @@ textarea {
   border-right: 0;
 }
 
+.invoice-summary span,
 .invoice-summary strong,
-.invoice-payment span {
+.invoice-payment span,
+.invoice-payment strong {
   display: block;
-  margin-top: 6px;
   font-weight: 400;
+  white-space: nowrap;
+}
+
+.invoice-summary strong,
+.invoice-payment strong {
+  margin-top: 6px;
 }
 
 .invoice-summary > div:last-child strong {
@@ -612,13 +623,27 @@ textarea {
 }
 
 .payment-labels {
+  align-items: flex-end;
+  justify-content: center;
   text-align: right;
   line-height: 1.55;
   white-space: pre-line;
 }
 
-.invoice-payment > div {
+.payment-values {
+  align-items: flex-start;
+  justify-content: center;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.invoice-payment > div,
+.invoice-payment strong {
   white-space: pre-line;
+}
+
+.invoice-payment span {
+  white-space: nowrap;
 }
 
 .company-tax {

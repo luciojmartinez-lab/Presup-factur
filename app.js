@@ -1,5 +1,5 @@
 ﻿const STORAGE_KEY = "budget-app-v1";
-const APP_VERSION = 10;
+const APP_VERSION = 11;
 const LOGO_VERSION = 4;
 const WRAP_CHARS = 68;
 const SEGMENT_LINES = 4;
@@ -563,8 +563,8 @@ function createBudgetFooter(totals) {
 }
 
 function createSummaryCell(label, value) {
-  const cell = createEl("div", "", label);
-  cell.append(createEl("strong", "", value));
+  const cell = createEl("div");
+  cell.append(createEl("span", "", label), createEl("strong", "", value));
   return cell;
 }
 
@@ -584,7 +584,7 @@ function createInvoiceFooter(totals) {
   const payment = createEl("div", "invoice-payment");
   payment.append(
     createEl("div", "payment-labels", "Vencimiento:\nForma de pago:"),
-    createEl("div", "", `${formatDate(state.dueDate)}\n${state.paymentMethod}`),
+    createEl("div", "payment-values", `${formatDate(state.dueDate)}\n${state.paymentMethod}`),
     createSummaryCell("Entidad", state.bankEntity),
     createSummaryCell("Oficina", state.bankOffice),
     createSummaryCell("D.C.", state.bankControl),
@@ -775,7 +775,7 @@ document.querySelector("#printBtn").addEventListener("click", () => {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="${getBaseUrl()}">
   <title>${fileName}</title>
-  <link rel="stylesheet" href="styles.css?v=005">
+  <link rel="stylesheet" href="styles.css?v=006">
   <style>
     @page { size: A4; margin: 0; }
     body { background: #fff; }
