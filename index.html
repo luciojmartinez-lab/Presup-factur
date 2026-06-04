@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Presup-factur v004</title>
-  <link rel="stylesheet" href="styles.css?v=004">
+  <title>Presup-factur v005</title>
+  <link rel="stylesheet" href="styles.css?v=005">
 </head>
 <body>
   <main class="app">
@@ -55,6 +55,20 @@
               <input id="logoInput" name="logo" type="file" accept="image/*">
             </label>
             <button type="button" id="defaultLogoBtn" class="secondary wide">Logo original</button>
+          </div>
+        </details>
+
+        <details class="foldout">
+          <summary>Guardado</summary>
+          <div class="foldout-body">
+            <div class="directory-row">
+              <button type="button" class="secondary" data-directory-type="PRESUPUESTO">Carpeta presupuestos</button>
+              <span id="quoteDirectoryStatus">No seleccionada</span>
+            </div>
+            <div class="directory-row">
+              <button type="button" class="secondary" data-directory-type="FACTURA">Carpeta facturas</button>
+              <span id="invoiceDirectoryStatus">No seleccionada</span>
+            </div>
           </div>
         </details>
 
@@ -157,7 +171,7 @@
           </div>
         </fieldset>
       </form>
-      <p class="app-version">Versión v004</p>
+      <p class="app-version">Versión v005</p>
     </section>
 
     <section class="preview-wrap" aria-label="Vista previa">
@@ -185,6 +199,6 @@
     </div>
   </template>
 
-  <script src="app.js?v=004"></script>
+  <script src="app.js?v=005"></script>
 </body>
 </html>
