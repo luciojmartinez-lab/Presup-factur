@@ -1,4 +1,9 @@
-# Presupuestos y facturas
+# Presup-factur v001
+
+Version actual: `presup-factur-v001`.
+
+Repositorio GitHub: `luciojmartinez-lab/Presup-factur`
+Proyecto Netlify: https://app.netlify.com/projects/presup-factur/overview
 
 Aplicación estática para crear presupuestos y facturas, previsualizarlos en formato A4 y guardarlos como PDF desde la opción de imprimir del navegador.
 
@@ -11,6 +16,8 @@ El nombre sugerido para el PDF usa el formato antiguo: `P-65478` para presupuest
 La app guarda los datos en el navegador con `localStorage`. Usa `Backup` para descargar una copia de seguridad y `Restaurar` para cargarla en otro navegador o móvil.
 
 ## Netlify
+
+Proyecto configurado: `presup-factur`.
 
 El proyecto no necesita compilación. En Netlify se puede publicar directamente la raíz del repositorio:
 
