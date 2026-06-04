@@ -1,5 +1,5 @@
 ﻿const STORAGE_KEY = "budget-app-v1";
-const APP_VERSION = 12;
+const APP_VERSION = 13;
 const LOGO_VERSION = 4;
 const WRAP_CHARS = 68;
 const SEGMENT_LINES = 4;
@@ -96,10 +96,12 @@ function saveState() {
 }
 
 function formatMoney(value) {
-  return new Intl.NumberFormat("es-ES", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  }).format(value);
+  const number = Number(value);
+  const safeNumber = Number.isFinite(number) ? number : 0;
+  const sign = safeNumber < 0 ? "-" : "";
+  const [integerPart, decimalPart] = Math.abs(safeNumber).toFixed(2).split(".");
+  const groupedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return `${sign}${groupedInteger},${decimalPart}`;
 }
 
 function formatDate(value) {
@@ -775,7 +777,7 @@ document.querySelector("#printBtn").addEventListener("click", () => {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="${getBaseUrl()}">
   <title>${fileName}</title>
-  <link rel="stylesheet" href="styles.css?v=007">
+  <link rel="stylesheet" href="styles.css?v=008">
   <style>
     @page { size: A4; margin: 0; }
     body { background: #fff; }

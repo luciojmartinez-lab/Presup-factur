@@ -483,19 +483,19 @@ textarea {
 }
 
 .lines col:nth-child(1) {
-  width: 68%;
+  width: 66%;
 }
 
 .lines col:nth-child(2) {
-  width: 9%;
+  width: 8%;
 }
 
 .lines col:nth-child(3) {
-  width: 11%;
+  width: 13%;
 }
 
 .lines col:nth-child(4) {
-  width: 12%;
+  width: 13%;
 }
 
 .doc-footer {
