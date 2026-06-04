@@ -1,0 +1,572 @@
+:root {
+  --ink: #151515;
+  --muted: #5b6470;
+  --line: #181818;
+  --panel: #f3f5f8;
+  --accent: #003f9f;
+  --button: #183b6b;
+  --button-hover: #0f2d55;
+  --border: #cfd6df;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: #e8edf3;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 6px;
+  background: var(--button);
+  color: #fff;
+  min-height: 40px;
+  padding: 0 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--button-hover);
+}
+
+button.secondary {
+  background: #fff;
+  color: #1d334f;
+  border: 1px solid var(--border);
+}
+
+button.secondary:hover {
+  background: #eef3f8;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: minmax(340px, 440px) 1fr;
+  min-height: 100vh;
+}
+
+.editor {
+  background: #fff;
+  border-right: 1px solid var(--border);
+  padding: 20px;
+  overflow: auto;
+  max-height: 100vh;
+}
+
+.editor-header {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+h1 {
+  font-size: 22px;
+  margin: 0 0 4px;
+}
+
+.editor-header p {
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.35;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(94px, 1fr));
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.actions #printBtn {
+  grid-column: span 2;
+}
+
+fieldset {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 0 0 14px;
+  padding: 14px;
+}
+
+legend {
+  padding: 0 6px;
+  color: #26384c;
+  font-weight: 700;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  color: #26384c;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--ink);
+  background: #fff;
+  padding: 9px 10px;
+  font-weight: 400;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.grid.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.items {
+  display: grid;
+  gap: 10px;
+}
+
+.item-row {
+  border: 1px solid #dfe5eb;
+  border-radius: 8px;
+  padding: 10px;
+  background: #fbfcfe;
+}
+
+.item-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 40px;
+  gap: 8px;
+  align-items: end;
+}
+
+.icon {
+  border-radius: 6px;
+  width: 40px;
+  padding: 0;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.wide {
+  width: 100%;
+}
+
+.preview-wrap {
+  padding: 28px;
+  overflow: auto;
+}
+
+.sheet {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  background: #fff;
+  padding: 16mm 14mm 13mm;
+  box-shadow: 0 10px 30px rgba(20, 35, 52, 0.18);
+  display: flex;
+  flex-direction: column;
+}
+
+.doc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-height: 46mm;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-mark {
+  position: relative;
+  width: 38mm;
+  height: 30mm;
+  display: grid;
+  place-items: center;
+  color: #111;
+  font-family: Arial Black, Arial, sans-serif;
+}
+
+.logo-mark::before {
+  content: "";
+  position: absolute;
+  width: 25mm;
+  height: 25mm;
+  border: 3.2mm solid #111;
+  border-right-color: transparent;
+  border-radius: 50%;
+  left: 0;
+  top: 1mm;
+}
+
+.logo-mark::after {
+  content: "";
+  position: absolute;
+  width: 29mm;
+  height: 5mm;
+  background: #111;
+  left: 11mm;
+  top: 15mm;
+}
+
+.logo-mark span {
+  position: absolute;
+  color: #f10000;
+  font-size: 28mm;
+  left: 9mm;
+  top: -5mm;
+  line-height: 1;
+}
+
+.logo-mark strong {
+  position: absolute;
+  color: #111;
+  font-size: 25mm;
+  left: 17mm;
+  top: 5mm;
+  line-height: 1;
+}
+
+.logo-mark.has-image {
+  display: block;
+}
+
+.logo-mark.full-logo {
+  width: 88mm;
+  height: 31mm;
+}
+
+.logo-mark.has-image::before,
+.logo-mark.has-image::after,
+.logo-mark.has-image span,
+.logo-mark.has-image strong {
+  display: none;
+}
+
+.logo-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.brand-subtitle {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+
+.brand-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.company-contact {
+  white-space: pre-line;
+  text-align: center;
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.3;
+  min-width: 52mm;
+}
+
+.sheet h2 {
+  color: var(--accent);
+  text-align: right;
+  font-size: 28px;
+  font-weight: 400;
+  margin: -12mm 6mm 1mm 0;
+}
+
+.meta-box {
+  border: 2px solid var(--line);
+  display: grid;
+  grid-template-columns: 48% 52%;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  min-height: 24mm;
+}
+
+.meta-left,
+.meta-right {
+  padding: 5px 7px;
+}
+
+.meta-left {
+  border-right: 2px solid var(--line);
+}
+
+.phone-label {
+  margin-left: 24px;
+}
+
+#clientInfoPreview {
+  white-space: pre-line;
+}
+
+.lines {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+}
+
+.lines th,
+.lines td {
+  border: 2px solid var(--line);
+  vertical-align: top;
+}
+
+.lines th {
+  font-family: Arial, Helvetica, sans-serif;
+  height: 10mm;
+  font-size: 15px;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.lines th.concept {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 7px;
+}
+
+.lines .concept-cell {
+  white-space: pre-wrap;
+  padding: 3px 6px;
+}
+
+.lines .num {
+  text-align: right;
+  padding: 5px 4px;
+}
+
+.lines col:nth-child(1) {
+  width: 68%;
+}
+
+.lines col:nth-child(2) {
+  width: 9%;
+}
+
+.lines col:nth-child(3) {
+  width: 11%;
+}
+
+.lines col:nth-child(4) {
+  width: 12%;
+}
+
+.doc-footer {
+  margin-top: auto;
+}
+
+.doc-footer > p {
+  margin: 0 0 2px;
+  font-size: 14px;
+}
+
+.signatures {
+  border: 2px solid var(--line);
+  display: grid;
+  grid-template-columns: 30% 30% 40%;
+  min-height: 26mm;
+}
+
+.signatures > div {
+  border-right: 2px solid var(--line);
+  padding: 5px 8px;
+  text-align: center;
+  position: relative;
+  font-size: 14px;
+}
+
+.signatures > div:last-child {
+  border-right: 0;
+}
+
+.signatures span:not(.grand span) {
+  display: block;
+}
+
+.signatures div > span {
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  right: 0;
+}
+
+.totals {
+  text-align: right;
+  padding: 5px 4px 0 8px;
+}
+
+.totals p {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 7px;
+}
+
+.totals span {
+  text-align: left;
+}
+
+.totals .grand {
+  font-weight: 800;
+}
+
+.invoice-footer {
+  font-size: 14px;
+}
+
+.invoice-summary,
+.invoice-payment {
+  border: 2px solid var(--line);
+  display: grid;
+}
+
+.invoice-summary {
+  grid-template-columns: 13% 8% 15% 16% 11% 16% 21%;
+  min-height: 17mm;
+  border-bottom: 0;
+}
+
+.invoice-payment {
+  grid-template-columns: 16% 34% 10% 10% 8% 22%;
+  min-height: 14mm;
+}
+
+.invoice-summary > div,
+.invoice-payment > div {
+  border-right: 2px solid var(--line);
+  padding: 4px 5px;
+  text-align: center;
+}
+
+.invoice-summary > div:last-child,
+.invoice-payment > div:last-child {
+  border-right: 0;
+}
+
+.invoice-summary strong,
+.invoice-payment span {
+  display: block;
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+.invoice-summary > div:last-child strong {
+  white-space: nowrap;
+}
+
+.payment-labels {
+  text-align: right;
+  line-height: 1.55;
+}
+
+.company-tax {
+  color: #b65c5c;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin: 2px 0 0;
+  text-align: right;
+}
+
+@media (max-width: 1100px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .editor {
+    max-height: none;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .preview-wrap {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 760px) {
+  .editor-header,
+  .grid.two {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .sheet {
+    transform: scale(0.54);
+    transform-origin: top left;
+    margin: 0;
+  }
+
+  .preview-wrap {
+    min-height: calc(297mm * 0.54 + 32px);
+  }
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .editor {
+    display: none;
+  }
+
+  .app {
+    display: block;
+  }
+
+  .preview-wrap {
+    padding: 0;
+    overflow: visible;
+  }
+
+  .sheet {
+    width: 210mm;
+    min-height: 297mm;
+    box-shadow: none;
+    margin: 0;
+    transform: none;
+    page-break-after: always;
+  }
+}
