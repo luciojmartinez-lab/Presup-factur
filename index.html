@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Presup-factur v011</title>
-  <link rel="stylesheet" href="styles.css?v=011">
+  <title>Presup-factur v012</title>
+  <link rel="stylesheet" href="styles.css?v=012">
 </head>
 <body>
   <main class="app">
@@ -17,17 +17,31 @@
         <div class="actions">
           <button type="button" id="newQuoteBtn" class="secondary">Añadir presupuesto</button>
           <button type="button" id="newInvoiceBtn" class="secondary">Añadir factura</button>
-          <button type="button" id="backupBtn" class="secondary">Guardar</button>
           <button type="button" id="restoreQuoteBtn" class="secondary" data-restore-type="PRESUPUESTO">Restaurar Presupuesto</button>
           <button type="button" id="restoreInvoiceBtn" class="secondary" data-restore-type="FACTURA">Restaurar Factura</button>
-          <button type="button" id="printBtn">Imprimir / PDF</button>
+          <button type="button" id="backupBtn" class="secondary">Guardar</button>
+          <button type="button" id="printBtn">Imprimir PDF</button>
           <input id="restoreInput" type="file" accept="application/json,.json" hidden>
         </div>
       </header>
 
       <form id="quoteForm" autocomplete="off">
+        <fieldset class="type-box">
+          <legend>Tipo</legend>
+          <div class="type-options" role="radiogroup" aria-label="Tipo de documento">
+            <label class="radio-option">
+              <input name="docType" type="radio" value="PRESUPUESTO">
+              Presupuesto
+            </label>
+            <label class="radio-option">
+              <input name="docType" type="radio" value="FACTURA">
+              Factura
+            </label>
+          </div>
+        </fieldset>
+
         <details class="foldout">
-          <summary>Datos empresa</summary>
+          <summary>Datos Empresa</summary>
           <div class="foldout-body">
             <label>
               Nombre comercial
@@ -60,7 +74,7 @@
         </details>
 
         <details class="foldout">
-          <summary>Guardado</summary>
+          <summary>Carpetas de trabajo</summary>
           <div class="foldout-body">
             <div class="directory-row">
               <button type="button" class="secondary" data-directory-type="PRESUPUESTO">Carpeta presupuestos</button>
@@ -73,16 +87,10 @@
           </div>
         </details>
 
-        <fieldset>
-          <legend>Documento</legend>
+        <details class="foldout">
+          <summary>Datos Encabezado</summary>
+          <div class="foldout-body">
           <div class="grid two">
-            <label>
-              Tipo
-              <select name="docType">
-                <option>PRESUPUESTO</option>
-                <option>FACTURA</option>
-              </select>
-            </label>
             <label>
               Número
               <input name="docNumber" type="text">
@@ -96,10 +104,12 @@
               <input name="reference" type="text">
             </label>
           </div>
-        </fieldset>
+          </div>
+        </details>
 
-        <fieldset>
-          <legend>Cliente</legend>
+        <details class="foldout">
+          <summary>Datos Cliente</summary>
+          <div class="foldout-body">
           <div class="grid two">
             <label>
               Cliente
@@ -118,7 +128,8 @@
             Dirección / notas
             <textarea name="clientInfo" rows="3"></textarea>
           </label>
-        </fieldset>
+          </div>
+        </details>
 
         <fieldset>
           <legend>Conceptos</legend>
@@ -172,7 +183,7 @@
           </div>
         </fieldset>
       </form>
-      <p class="app-version">Versión v011</p>
+      <p class="app-version">Versión v012</p>
     </section>
 
     <section class="preview-wrap" aria-label="Vista previa">
@@ -200,6 +211,6 @@
     </div>
   </template>
 
-  <script src="app.js?v=011"></script>
+  <script src="app.js?v=012"></script>
 </body>
 </html>

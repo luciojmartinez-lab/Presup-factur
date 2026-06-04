@@ -126,6 +126,45 @@ h1 {
   white-space: nowrap;
 }
 
+.type-box {
+  background: #fff;
+}
+
+.type-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: #1d334f;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.radio-option:has(input:checked) {
+  border-color: var(--button);
+  background: #eef4fb;
+}
+
+.radio-option input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--button);
+}
+
 fieldset {
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -687,6 +726,10 @@ textarea {
   }
 
   .actions {
+    grid-template-columns: 1fr;
+  }
+
+  .type-options {
     grid-template-columns: 1fr;
   }
 

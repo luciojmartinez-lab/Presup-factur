@@ -1,5 +1,5 @@
 ﻿const STORAGE_KEY = "budget-app-v1";
-const APP_VERSION = 16;
+const APP_VERSION = 17;
 const LOGO_VERSION = 4;
 const WRAP_CHARS = 68;
 const SEGMENT_LINES = 4;
@@ -344,7 +344,15 @@ async function createNewDocumentWithPrompt(type) {
 function fillForm({ preservePreviewScroll = false } = {}) {
   Object.entries(state).forEach(([key, value]) => {
     const field = form.elements[key];
-    if (field && key !== "items" && key !== "logoData") field.value = value;
+    if (field && key !== "items" && key !== "logoData") {
+      if (field.length && field[0] && field[0].type === "radio") {
+        Array.from(field).forEach((option) => {
+          option.checked = option.value === String(value);
+        });
+      } else {
+        field.value = value;
+      }
+    }
   });
   renderItemsEditor();
   renderPreview({ preserveScroll: preservePreviewScroll });
@@ -859,7 +867,7 @@ document.querySelector("#printBtn").addEventListener("click", () => {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="${getBaseUrl()}">
   <title>${fileName}</title>
-  <link rel="stylesheet" href="styles.css?v=011">
+  <link rel="stylesheet" href="styles.css?v=012">
   <style>
     @page { size: A4; margin: 0; }
     body { background: #fff; }
@@ -870,7 +878,7 @@ document.querySelector("#printBtn").addEventListener("click", () => {
 </head>
 <body>
   <div class="print-toolbar">
-    <button type="button" onclick="window.print()">Imprimir / PDF</button>
+    <button type="button" onclick="window.print()">Imprimir PDF</button>
   </div>
   ${document.querySelector("#printArea").outerHTML}
 </body>
