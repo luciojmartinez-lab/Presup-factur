@@ -3,22 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Presup-factur v010</title>
-  <link rel="stylesheet" href="styles.css?v=010">
+  <title>Presup-factur v011</title>
+  <link rel="stylesheet" href="styles.css?v=011">
 </head>
 <body>
   <main class="app">
     <section class="editor" aria-label="Editor del presupuesto">
       <header class="editor-header">
-        <div>
-          <h1>Presup-factur</h1>
-          <p>Rellena los datos, revisa la hoja A4 y guarda como PDF desde imprimir.</p>
+        <div class="app-title">
+          <h1>Presupuestos y Facturas</h1>
+          <p>por Lucio J. Martinez</p>
         </div>
         <div class="actions">
           <button type="button" id="newQuoteBtn" class="secondary">Añadir presupuesto</button>
           <button type="button" id="newInvoiceBtn" class="secondary">Añadir factura</button>
           <button type="button" id="backupBtn" class="secondary">Guardar</button>
-          <button type="button" id="restoreBtn" class="secondary">Restaurar</button>
+          <button type="button" id="restoreQuoteBtn" class="secondary" data-restore-type="PRESUPUESTO">Restaurar Presupuesto</button>
+          <button type="button" id="restoreInvoiceBtn" class="secondary" data-restore-type="FACTURA">Restaurar Factura</button>
           <button type="button" id="printBtn">Imprimir / PDF</button>
           <input id="restoreInput" type="file" accept="application/json,.json" hidden>
         </div>
@@ -171,7 +172,7 @@
           </div>
         </fieldset>
       </form>
-      <p class="app-version">Versión v010</p>
+      <p class="app-version">Versión v011</p>
     </section>
 
     <section class="preview-wrap" aria-label="Vista previa">
@@ -199,6 +200,6 @@
     </div>
   </template>
 
-  <script src="app.js?v=010"></script>
+  <script src="app.js?v=011"></script>
 </body>
 </html>

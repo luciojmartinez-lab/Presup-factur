@@ -1,5 +1,5 @@
 ﻿const STORAGE_KEY = "budget-app-v1";
-const APP_VERSION = 15;
+const APP_VERSION = 16;
 const LOGO_VERSION = 4;
 const WRAP_CHARS = 68;
 const SEGMENT_LINES = 4;
@@ -62,6 +62,7 @@ const defaultLogoBtn = document.querySelector("#defaultLogoBtn");
 const printArea = document.querySelector("#printArea");
 const previewWrap = document.querySelector(".preview-wrap");
 const directoryButtons = Array.from(document.querySelectorAll("[data-directory-type]"));
+const restoreButtons = Array.from(document.querySelectorAll("[data-restore-type]"));
 const directoryStatus = {
   PRESUPUESTO: document.querySelector("#quoteDirectoryStatus"),
   FACTURA: document.querySelector("#invoiceDirectoryStatus")
@@ -131,6 +132,10 @@ function getBaseUrl() {
 
 function canUseDirectoryPicker() {
   return "showDirectoryPicker" in window && window.isSecureContext && "indexedDB" in window;
+}
+
+function canUseFilePicker() {
+  return "showOpenFilePicker" in window && window.isSecureContext;
 }
 
 function openDirectoryDb() {
@@ -220,6 +225,64 @@ async function pickDirectory(type) {
       alert("No se ha podido seleccionar la carpeta.");
     }
   }
+}
+
+async function getRestorePickerOptions(type, includeStartDirectory = true) {
+  const options = {
+    multiple: false,
+    excludeAcceptAllOption: false,
+    id: type === "FACTURA" ? "restaurar-facturas" : "restaurar-presupuestos",
+    types: [
+      {
+        description: "Documento JSON",
+        accept: {
+          "application/json": [".json"]
+        }
+      }
+    ]
+  };
+  if (includeStartDirectory) {
+    try {
+      const handle = await readDirectoryHandle(type);
+      if (handle) options.startIn = handle;
+    } catch {
+      // Si no hay carpeta guardada o el permiso caducó, el selector usa su ubicación recordada.
+    }
+  }
+  return options;
+}
+
+async function restoreDocumentFromFile(file) {
+  if (!file) return;
+  const content = await file.text();
+  const parsed = JSON.parse(content);
+  state = normalizeState(parsed.state || parsed);
+  saveState();
+  fillForm();
+}
+
+async function restoreDocument(type) {
+  if (canUseFilePicker()) {
+    try {
+      const [fileHandle] = await window.showOpenFilePicker(await getRestorePickerOptions(type));
+      await restoreDocumentFromFile(await fileHandle.getFile());
+      return;
+    } catch (error) {
+      if (error && error.name === "AbortError") return;
+      try {
+        const [fileHandle] = await window.showOpenFilePicker(await getRestorePickerOptions(type, false));
+        await restoreDocumentFromFile(await fileHandle.getFile());
+        return;
+      } catch (retryError) {
+        if (retryError && retryError.name === "AbortError") return;
+      }
+      alert("No se ha podido restaurar el documento JSON.");
+      return;
+    }
+  }
+  const input = document.querySelector("#restoreInput");
+  input.dataset.restoreType = type;
+  input.click();
 }
 
 function getDocumentExportJson() {
@@ -761,27 +824,22 @@ directoryButtons.forEach((button) => {
   });
 });
 
-document.querySelector("#restoreBtn").addEventListener("click", () => {
-  document.querySelector("#restoreInput").click();
+restoreButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    restoreDocument(button.dataset.restoreType);
+  });
 });
 
-document.querySelector("#restoreInput").addEventListener("change", (event) => {
+document.querySelector("#restoreInput").addEventListener("change", async (event) => {
   const file = event.target.files[0];
   if (!file) return;
-  const reader = new FileReader();
-  reader.addEventListener("load", () => {
-    try {
-      const parsed = JSON.parse(reader.result);
-      state = normalizeState(parsed.state || parsed);
-      saveState();
-      fillForm();
-    } catch {
-      alert("No se ha podido leer el backup JSON.");
-    } finally {
-      event.target.value = "";
-    }
-  });
-  reader.readAsText(file);
+  try {
+    await restoreDocumentFromFile(file);
+  } catch {
+    alert("No se ha podido leer el documento JSON.");
+  } finally {
+    event.target.value = "";
+  }
 });
 
 document.querySelector("#printBtn").addEventListener("click", () => {
@@ -801,7 +859,7 @@ document.querySelector("#printBtn").addEventListener("click", () => {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="${getBaseUrl()}">
   <title>${fileName}</title>
-  <link rel="stylesheet" href="styles.css?v=010">
+  <link rel="stylesheet" href="styles.css?v=011">
   <style>
     @page { size: A4; margin: 0; }
     body { background: #fff; }
