@@ -1,5 +1,5 @@
 ﻿const STORAGE_KEY = "budget-app-v1";
-const APP_VERSION = 14;
+const APP_VERSION = 15;
 const LOGO_VERSION = 4;
 const WRAP_CHARS = 68;
 const SEGMENT_LINES = 4;
@@ -60,6 +60,7 @@ const itemTemplate = document.querySelector("#itemTemplate");
 const logoInput = document.querySelector("#logoInput");
 const defaultLogoBtn = document.querySelector("#defaultLogoBtn");
 const printArea = document.querySelector("#printArea");
+const previewWrap = document.querySelector(".preview-wrap");
 const directoryButtons = Array.from(document.querySelectorAll("[data-directory-type]"));
 const directoryStatus = {
   PRESUPUESTO: document.querySelector("#quoteDirectoryStatus"),
@@ -277,13 +278,13 @@ async function createNewDocumentWithPrompt(type) {
   createNewDocument(type);
 }
 
-function fillForm() {
+function fillForm({ preservePreviewScroll = false } = {}) {
   Object.entries(state).forEach(([key, value]) => {
     const field = form.elements[key];
     if (field && key !== "items" && key !== "logoData") field.value = value;
   });
   renderItemsEditor();
-  renderPreview();
+  renderPreview({ preserveScroll: preservePreviewScroll });
 }
 
 function syncItemsFromEditor() {
@@ -657,10 +658,32 @@ function paginateSegments(segments, docType, totals) {
   }
 }
 
-function renderPreview() {
+function getPreviewScrollState() {
+  if (!previewWrap) return null;
+  return {
+    top: previewWrap.scrollTop,
+    left: previewWrap.scrollLeft
+  };
+}
+
+function restorePreviewScroll(scrollState) {
+  if (!previewWrap || !scrollState) return;
+  const applyScroll = () => {
+    const maxTop = Math.max(0, previewWrap.scrollHeight - previewWrap.clientHeight);
+    const maxLeft = Math.max(0, previewWrap.scrollWidth - previewWrap.clientWidth);
+    previewWrap.scrollTop = Math.min(scrollState.top, maxTop);
+    previewWrap.scrollLeft = Math.min(scrollState.left, maxLeft);
+  };
+  applyScroll();
+  if (typeof requestAnimationFrame === "function") requestAnimationFrame(applyScroll);
+}
+
+function renderPreview({ preserveScroll = true } = {}) {
   if (!printArea) return;
+  const scrollState = preserveScroll ? getPreviewScrollState() : null;
   const docType = (state.docType || "PRESUPUESTO").toUpperCase();
   paginateSegments(buildSegments(), docType, calculateTotals());
+  restorePreviewScroll(scrollState);
 }
 
 form.addEventListener("input", readForm);
@@ -778,7 +801,7 @@ document.querySelector("#printBtn").addEventListener("click", () => {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="${getBaseUrl()}">
   <title>${fileName}</title>
-  <link rel="stylesheet" href="styles.css?v=009">
+  <link rel="stylesheet" href="styles.css?v=010">
   <style>
     @page { size: A4; margin: 0; }
     body { background: #fff; }
