@@ -1,5 +1,5 @@
 ﻿const STORAGE_KEY = "budget-app-v1";
-const APP_VERSION = 13;
+const APP_VERSION = 14;
 const LOGO_VERSION = 4;
 const WRAP_CHARS = 68;
 const SEGMENT_LINES = 4;
@@ -341,6 +341,7 @@ function renderItemsEditor() {
   itemsEl.replaceChildren();
   state.items.forEach((item, index) => {
     const node = itemTemplate.content.firstElementChild.cloneNode(true);
+    node.querySelector("[data-item-title]").textContent = `Concepto ${index + 1}`;
     node.querySelector('[data-field="description"]').value = item.description || "";
     node.querySelector('[data-field="quantity"]').value = item.quantity == null ? 1 : item.quantity;
     node.querySelector('[data-field="price"]').value = item.price == null ? 0 : item.price;
@@ -777,7 +778,7 @@ document.querySelector("#printBtn").addEventListener("click", () => {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="${getBaseUrl()}">
   <title>${fileName}</title>
-  <link rel="stylesheet" href="styles.css?v=008">
+  <link rel="stylesheet" href="styles.css?v=009">
   <style>
     @page { size: A4; margin: 0; }
     body { background: #fff; }
