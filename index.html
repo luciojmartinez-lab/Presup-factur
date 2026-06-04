@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Presup-factur v002</title>
-  <link rel="stylesheet" href="styles.css?v=002">
+  <title>Presup-factur v003</title>
+  <link rel="stylesheet" href="styles.css?v=003">
 </head>
 <body>
   <main class="app">
@@ -17,8 +17,7 @@
         <div class="actions">
           <button type="button" id="newQuoteBtn" class="secondary">Añadir presupuesto</button>
           <button type="button" id="newInvoiceBtn" class="secondary">Añadir factura</button>
-          <button type="button" id="sampleBtn" class="secondary">Cargar ejemplo</button>
-          <button type="button" id="backupBtn" class="secondary">Backup</button>
+          <button type="button" id="backupBtn" class="secondary">Guardar</button>
           <button type="button" id="restoreBtn" class="secondary">Restaurar</button>
           <button type="button" id="printBtn">Imprimir / PDF</button>
           <input id="restoreInput" type="file" accept="application/json,.json" hidden>
@@ -26,30 +25,38 @@
       </header>
 
       <form id="quoteForm" autocomplete="off">
-        <fieldset>
-          <legend>Empresa</legend>
-          <label>
-            Nombre comercial
-            <input name="companyTitle" type="text">
-          </label>
-          <label>
-            Razón social
-            <input name="companyName" type="text">
-          </label>
-          <label>
-            Especialidad
-            <input name="companySubtitle" type="text">
-          </label>
-          <label>
-            Dirección y teléfonos
-            <textarea name="companyAddress" rows="4"></textarea>
-          </label>
-          <label>
-            Logotipo
-            <input id="logoInput" name="logo" type="file" accept="image/*">
-          </label>
-          <button type="button" id="defaultLogoBtn" class="secondary wide">Logo original</button>
-        </fieldset>
+        <details class="foldout">
+          <summary>Datos empresa</summary>
+          <div class="foldout-body">
+            <label>
+              Nombre comercial
+              <input name="companyTitle" type="text">
+            </label>
+            <label>
+              Razón social
+              <input name="companyName" type="text">
+            </label>
+            <label>
+              Especialidad
+              <input name="companySubtitle" type="text">
+            </label>
+            <label>
+              Dirección y teléfonos
+              <textarea name="companyAddress" rows="4"></textarea>
+            </label>
+          </div>
+        </details>
+
+        <details class="foldout">
+          <summary>Logo</summary>
+          <div class="foldout-body">
+            <label>
+              Logo
+              <input id="logoInput" name="logo" type="file" accept="image/*">
+            </label>
+            <button type="button" id="defaultLogoBtn" class="secondary wide">Logo original</button>
+          </div>
+        </details>
 
         <fieldset>
           <legend>Documento</legend>
@@ -153,84 +160,7 @@
     </section>
 
     <section class="preview-wrap" aria-label="Vista previa">
-      <article id="printArea" class="sheet">
-        <header class="doc-head">
-          <div class="brand">
-            <div id="logoPreview" class="logo-mark has-image full-logo" aria-hidden="true">
-              <img src="assets/logo-gonzalez-e-hijos.jpg?v=4" alt="">
-            </div>
-          </div>
-          <div class="company-contact" id="companyAddressPreview"></div>
-        </header>
-
-        <h2 id="docTypePreview"></h2>
-
-        <section class="meta-box">
-          <div class="meta-left">
-            <div>Página : 1</div>
-            <div><span id="docTypeInlinePreview"></span> Nº: <span id="docNumberPreview"></span></div>
-            <div>DE FECHA : <span id="docDatePreview"></span></div>
-            <div>REFERENCIA: <span id="referencePreview"></span></div>
-          </div>
-          <div class="meta-right">
-            <div>CLIENTE: <span id="clientNamePreview"></span> <span id="clientTaxWrap">N.I.F.: <span id="clientTaxIdPreview"></span></span> <span class="phone-label">TEL.:</span> <span id="clientPhonePreview"></span></div>
-            <div id="clientInfoPreview"></div>
-          </div>
-        </section>
-
-        <table class="lines">
-          <colgroup>
-            <col>
-            <col>
-            <col>
-            <col>
-          </colgroup>
-          <thead>
-            <tr>
-              <th class="concept">CONCEPTO</th>
-              <th>UNID.</th>
-              <th>PRECIO</th>
-              <th>IMPORTE</th>
-            </tr>
-          </thead>
-          <tbody id="linesPreview"></tbody>
-        </table>
-
-        <footer class="doc-footer">
-          <div id="budgetFooter">
-            <p id="footerNotePreview"></p>
-            <div class="signatures">
-              <div>Acepto el presupuesto:<span>Firma.</span></div>
-              <div>Por la Empresa:</div>
-              <div class="totals">
-                <p><span>IMPORTE:</span> <strong id="subtotalPreview"></strong></p>
-                <p><span>Importe I.V.A. <span id="taxRatePreview"></span> % :</span> <strong id="taxPreview"></strong></p>
-                <p class="grand"><span>IMPORTE TOTAL:</span> <strong id="totalPreview"></strong></p>
-              </div>
-            </div>
-          </div>
-          <div id="invoiceFooter" class="invoice-footer" hidden>
-            <div class="invoice-summary">
-              <div>Total Presup.<strong id="invoiceSubtotalPreview"></strong></div>
-              <div>% Dto.<strong id="discountRatePreview"></strong></div>
-              <div>Importe Dto.<strong id="discountPreview"></strong></div>
-              <div>Base Imponible<strong id="basePreview"></strong></div>
-              <div>% I.V.A.<strong id="invoiceTaxRatePreview"></strong></div>
-              <div>Importe I.V.A.<strong id="invoiceTaxPreview"></strong></div>
-              <div>Total Factura<strong id="invoiceTotalPreview"></strong></div>
-            </div>
-            <div class="invoice-payment">
-              <div class="payment-labels">Vencimiento:<br>Forma de pago:</div>
-              <div><span id="dueDatePreview"></span><br><span id="paymentMethodPreview"></span></div>
-              <div>Entidad<br><span id="bankEntityPreview"></span></div>
-              <div>Oficina<br><span id="bankOfficePreview"></span></div>
-              <div>D.C.<br><span id="bankControlPreview"></span></div>
-              <div>Número de Cuenta<br><span id="bankAccountPreview"></span></div>
-            </div>
-            <p class="company-tax" id="companyTaxIdPreview"></p>
-          </div>
-        </footer>
-      </article>
+      <div id="printArea" class="print-pages"></div>
     </section>
   </main>
 
@@ -254,6 +184,6 @@
     </div>
   </template>
 
-  <script src="app.js?v=002"></script>
+  <script src="app.js?v=003"></script>
 </body>
 </html>

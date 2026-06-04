@@ -32,8 +32,9 @@ button {
   border-radius: 6px;
   background: var(--button);
   color: #fff;
+  font-size: 14px;
   min-height: 40px;
-  padding: 0 16px;
+  padding: 0 12px;
   cursor: pointer;
   line-height: 1.15;
   white-space: normal;
@@ -55,20 +56,21 @@ button.secondary:hover {
 
 .app {
   display: grid;
-  grid-template-columns: minmax(340px, 440px) 1fr;
+  grid-template-columns: minmax(390px, 520px) 1fr;
   min-height: 100vh;
 }
 
 .editor {
   background: #fff;
   border-right: 1px solid var(--border);
-  padding: 20px;
+  padding: 16px;
   overflow: auto;
   max-height: 100vh;
 }
 
 .editor-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 145px minmax(0, 1fr);
   gap: 16px;
   justify-content: space-between;
   align-items: flex-start;
@@ -88,9 +90,9 @@ h1 {
 
 .actions {
   display: grid;
-  grid-template-columns: repeat(2, minmax(94px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
-  flex: 0 0 auto;
+  min-width: 0;
 }
 
 .actions #printBtn {
@@ -108,6 +110,55 @@ legend {
   padding: 0 6px;
   color: #26384c;
   font-weight: 700;
+}
+
+.foldout {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 0 0 14px;
+  background: #fff;
+}
+
+.foldout summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 42px;
+  padding: 0 14px;
+  color: #26384c;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.foldout summary::-webkit-details-marker {
+  display: none;
+}
+
+.foldout summary::after {
+  content: "+";
+  color: var(--button);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.foldout[open] summary {
+  border-bottom: 1px solid #e6ebf0;
+}
+
+.foldout[open] summary::after {
+  content: "-";
+}
+
+.foldout-body {
+  padding: 12px 14px 14px;
+}
+
+.foldout-body label:last-child,
+.foldout-body button:last-child {
+  margin-bottom: 0;
 }
 
 label {
@@ -177,15 +228,22 @@ textarea {
   overflow: auto;
 }
 
+.print-pages {
+  display: grid;
+  gap: 24px;
+  justify-items: center;
+}
+
 .sheet {
   width: 210mm;
-  min-height: 297mm;
+  height: 297mm;
   margin: 0 auto;
   background: #fff;
   padding: 16mm 14mm 13mm;
   box-shadow: 0 10px 30px rgba(20, 35, 52, 0.18);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .doc-head {
@@ -316,6 +374,7 @@ textarea {
 .meta-left,
 .meta-right {
   padding: 5px 7px;
+  white-space: pre-line;
 }
 
 .meta-left {
@@ -326,16 +385,12 @@ textarea {
   margin-left: 24px;
 }
 
-#clientInfoPreview {
-  white-space: pre-line;
-}
-
 .lines {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
   font-family: "Courier New", monospace;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .lines th,
@@ -369,6 +424,30 @@ textarea {
   padding: 5px 4px;
 }
 
+.continuation-row td {
+  border-top: 0;
+}
+
+.continued-row td {
+  border-bottom: 0;
+}
+
+.continuation-row .concept-cell {
+  padding-top: 0;
+}
+
+.carry-row td {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 800;
+  vertical-align: middle;
+}
+
+.carry-label {
+  text-align: right;
+  letter-spacing: 2px;
+  padding: 5px 8px;
+}
+
 .lines col:nth-child(1) {
   width: 68%;
 }
@@ -389,7 +468,7 @@ textarea {
   margin-top: auto;
 }
 
-.doc-footer > p {
+.footer-note {
   margin: 0 0 2px;
   font-size: 14px;
 }
@@ -425,27 +504,42 @@ textarea {
 }
 
 .totals {
-  text-align: right;
+  text-align: left;
   padding: 5px 4px 0 8px;
+  font-size: 11px;
 }
 
 .totals p {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 0 0 7px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  gap: 7px;
+  align-items: start;
+  margin: 0 0 6px;
+  line-height: 1.25;
 }
 
 .totals span {
   text-align: left;
+  min-width: 0;
+}
+
+.totals strong {
+  text-align: right;
+  white-space: nowrap;
+  font-size: 11px;
 }
 
 .totals .grand {
   font-weight: 800;
+  font-size: 12px;
+}
+
+.totals .grand strong {
+  font-size: 12px;
 }
 
 .invoice-footer {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .invoice-summary,
@@ -470,6 +564,7 @@ textarea {
   border-right: 2px solid var(--line);
   padding: 4px 5px;
   text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .invoice-summary > div:last-child,
@@ -491,6 +586,11 @@ textarea {
 .payment-labels {
   text-align: right;
   line-height: 1.55;
+  white-space: pre-line;
+}
+
+.invoice-payment > div {
+  white-space: pre-line;
 }
 
 .company-tax {
@@ -563,12 +663,20 @@ textarea {
     overflow: visible;
   }
 
+  .print-pages {
+    display: block;
+  }
+
   .sheet {
     width: 210mm;
-    min-height: 297mm;
+    height: 297mm;
     box-shadow: none;
     margin: 0;
     transform: none;
     page-break-after: always;
+  }
+
+  .sheet:last-child {
+    page-break-after: auto;
   }
 }
