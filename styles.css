@@ -428,7 +428,7 @@ textarea {
   height: 297mm;
   margin: 0 auto;
   background: #fff;
-  padding: 16mm 14mm 13mm;
+  padding: 16mm 14mm 18mm;
   box-shadow: 0 10px 30px rgba(20, 35, 52, 0.18);
   display: flex;
   flex-direction: column;
