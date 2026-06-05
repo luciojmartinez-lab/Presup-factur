@@ -1,5 +1,5 @@
 ﻿const STORAGE_KEY = "budget-app-v1";
-const APP_VERSION = 27;
+const APP_VERSION = 28;
 const LOGO_VERSION = 4;
 const WRAP_CHARS = 56;
 const SEGMENT_LINES = 4;
@@ -310,6 +310,8 @@ function downloadDocumentJson(fileName, json) {
 
 async function saveCurrentDocument({ notify = false } = {}) {
   readForm();
+  updateNextNumberFromSavedDocument();
+  saveState();
   const fileName = `${getDocumentFileName()}.json`;
   const json = getDocumentExportJson();
   let handle = null;
@@ -398,16 +400,22 @@ function readForm() {
     companyTaxId: data.get("companyTaxId") || "",
     footerNote: data.get("footerNote") || "",
   };
-  syncNextNumber();
   saveState();
   renderPreview();
 }
 
-function syncNextNumber() {
+function getCurrentDocumentNumber() {
+  return Number.parseInt(String(state.docNumber).replace(/\D/g, ""), 10);
+}
+
+function updateNextNumberFromSavedDocument() {
   const type = state.docType || "PRESUPUESTO";
-  const current = Number.parseInt(String(state.docNumber).replace(/\D/g, ""), 10);
-  if (!Number.isNaN(current) && current >= (state.nextNumbers[type] || 1)) {
-    state.nextNumbers[type] = current + 1;
+  const current = getCurrentDocumentNumber();
+  if (!Number.isNaN(current)) {
+    state.nextNumbers = {
+      ...state.nextNumbers,
+      [type]: current + 1
+    };
   }
 }
 
@@ -826,11 +834,7 @@ function createNewDocument(type) {
     clientPhone: "",
     clientTaxId: "",
     clientInfo: "",
-    items: [{ description: "", quantity: 1, price: 0 }],
-    nextNumbers: {
-      ...state.nextNumbers,
-      [type]: nextNumber + 1
-    }
+    items: [{ description: "", quantity: 1, price: 0 }]
   };
   activeItemIndex = 0;
   saveState();
@@ -894,7 +898,7 @@ document.querySelector("#printBtn").addEventListener("click", () => {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="${getBaseUrl()}">
   <title>${fileName}</title>
-  <link rel="stylesheet" href="styles.css?v=022">
+  <link rel="stylesheet" href="styles.css?v=023">
   <style>
     @page { size: A4; margin: 0; }
     body { background: #fff; }
