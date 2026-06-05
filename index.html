@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Presup-factur v012</title>
-  <link rel="stylesheet" href="styles.css?v=012">
+  <title>Presup-factur v013</title>
+  <link rel="stylesheet" href="styles.css?v=013">
 </head>
 <body>
   <main class="app">
@@ -40,27 +40,7 @@
           </div>
         </fieldset>
 
-        <details class="foldout">
-          <summary>Datos Empresa</summary>
-          <div class="foldout-body">
-            <label>
-              Nombre comercial
-              <input name="companyTitle" type="text">
-            </label>
-            <label>
-              Razón social
-              <input name="companyName" type="text">
-            </label>
-            <label>
-              Especialidad
-              <input name="companySubtitle" type="text">
-            </label>
-            <label>
-              Dirección y teléfonos
-              <textarea name="companyAddress" rows="4"></textarea>
-            </label>
-          </div>
-        </details>
+        <div class="section-title"><span>Configuración</span></div>
 
         <details class="foldout">
           <summary>Logo</summary>
@@ -88,102 +68,128 @@
         </details>
 
         <details class="foldout">
-          <summary>Datos Encabezado</summary>
+          <summary>Datos Empresa</summary>
           <div class="foldout-body">
-          <div class="grid two">
             <label>
-              Número
-              <input name="docNumber" type="text">
+              Nombre comercial
+              <input name="companyTitle" type="text">
             </label>
             <label>
-              Fecha
-              <input name="docDate" type="date">
+              Razón social
+              <input name="companyName" type="text">
             </label>
             <label>
-              Referencia
-              <input name="reference" type="text">
+              Especialidad
+              <input name="companySubtitle" type="text">
+            </label>
+            <label>
+              Dirección y teléfonos
+              <textarea name="companyAddress" rows="4"></textarea>
             </label>
           </div>
+        </details>
+
+        <div class="section-title"><span>Encabezado</span></div>
+
+        <details class="foldout">
+          <summary>Datos Factura/Presupuesto</summary>
+          <div class="foldout-body">
+            <div class="grid two">
+              <label>
+                Número
+                <input name="docNumber" type="text">
+              </label>
+              <label>
+                Fecha
+                <input name="docDate" type="date">
+              </label>
+              <label>
+                Referencia
+                <input name="reference" type="text">
+              </label>
+            </div>
           </div>
         </details>
 
         <details class="foldout">
           <summary>Datos Cliente</summary>
           <div class="foldout-body">
-          <div class="grid two">
+            <div class="grid two">
+              <label>
+                Cliente
+                <input name="clientName" type="text">
+              </label>
+              <label>
+                Teléfono
+                <input name="clientPhone" type="text">
+              </label>
+              <label>
+                N.I.F.
+                <input name="clientTaxId" type="text">
+              </label>
+            </div>
             <label>
-              Cliente
-              <input name="clientName" type="text">
+              Dirección / notas
+              <textarea name="clientInfo" rows="3"></textarea>
             </label>
-            <label>
-              Teléfono
-              <input name="clientPhone" type="text">
-            </label>
-            <label>
-              N.I.F.
-              <input name="clientTaxId" type="text">
-            </label>
-          </div>
-          <label>
-            Dirección / notas
-            <textarea name="clientInfo" rows="3"></textarea>
-          </label>
           </div>
         </details>
 
-        <fieldset>
-          <legend>Conceptos</legend>
+        <div class="section-title"><span>Conceptos</span></div>
+        <div class="concepts-panel">
           <div id="items" class="items"></div>
-          <button type="button" id="addItemBtn" class="secondary wide">Añadir línea</button>
-        </fieldset>
+          <button type="button" id="addItemBtn" class="wide">Añadir concepto</button>
+        </div>
 
-        <fieldset>
-          <legend>Totales y condiciones</legend>
-          <div class="grid two">
-            <label>
-              IVA %
-              <input name="taxRate" type="number" min="0" step="0.01">
-            </label>
-            <label>
-              % Dto. factura
-              <input name="discountRate" type="number" min="0" step="0.01">
-            </label>
-            <label>
-              Vencimiento
-              <input name="dueDate" type="date">
-            </label>
-            <label>
-              Forma de pago
-              <input name="paymentMethod" type="text">
-            </label>
-            <label>
-              Entidad
-              <input name="bankEntity" type="text">
-            </label>
-            <label>
-              Oficina
-              <input name="bankOffice" type="text">
-            </label>
-            <label>
-              D.C.
-              <input name="bankControl" type="text">
-            </label>
-            <label>
-              Número de cuenta
-              <input name="bankAccount" type="text">
-            </label>
-            <label>
-              NIF empresa
-              <input name="companyTaxId" type="text">
-            </label>
-            <label>
-              Texto inferior
-              <input name="footerNote" type="text">
-            </label>
+        <details class="section-foldout">
+          <summary><span>Totales y condiciones</span></summary>
+          <div class="section-foldout-body">
+            <div class="grid two">
+              <label>
+                IVA %
+                <input name="taxRate" type="number" min="0" step="0.01">
+              </label>
+              <label>
+                % Dto. factura
+                <input name="discountRate" type="number" min="0" step="0.01">
+              </label>
+              <label>
+                Vencimiento
+                <input name="dueDate" type="date">
+              </label>
+              <label>
+                Forma de pago
+                <input name="paymentMethod" type="text">
+              </label>
+              <label>
+                Entidad
+                <input name="bankEntity" type="text">
+              </label>
+              <label>
+                Oficina
+                <input name="bankOffice" type="text">
+              </label>
+              <label>
+                D.C.
+                <input name="bankControl" type="text">
+              </label>
+              <label>
+                Número de cuenta
+                <input name="bankAccount" type="text">
+              </label>
+              <label>
+                NIF empresa
+                <input name="companyTaxId" type="text">
+              </label>
+              <label>
+                Texto inferior
+                <input name="footerNote" type="text">
+              </label>
+            </div>
           </div>
-        </fieldset>
+        </details>
       </form>
-      <p class="app-version">Versión v012</p>
+      <p class="app-version">Versión v013</p>
     </section>
 
     <section class="preview-wrap" aria-label="Vista previa">
@@ -192,25 +198,28 @@
   </main>
 
   <template id="itemTemplate">
-    <div class="item-row">
-      <label>
-        <span data-item-title>Concepto</span>
-        <textarea data-field="description" rows="4"></textarea>
-      </label>
-      <div class="item-grid">
+    <details class="item-row concept-foldout">
+      <summary><span data-item-title>Concepto</span></summary>
+      <div class="concept-body">
         <label>
-          Unid.
-          <input data-field="quantity" type="number" min="0" step="0.01">
+          Detalle
+          <textarea data-field="description" rows="4"></textarea>
         </label>
-        <label>
-          Precio
-          <input data-field="price" type="number" min="0" step="0.01">
-        </label>
-        <button type="button" class="icon remove-item" title="Eliminar línea" aria-label="Eliminar línea">×</button>
+        <div class="item-grid">
+          <label>
+            Unid.
+            <input data-field="quantity" type="number" min="0" step="0.01">
+          </label>
+          <label>
+            Precio
+            <input data-field="price" type="number" min="0" step="0.01">
+          </label>
+          <button type="button" class="icon remove-item" title="Eliminar concepto" aria-label="Eliminar concepto">×</button>
+        </div>
       </div>
-    </div>
+    </details>
   </template>
 
-  <script src="app.js?v=012"></script>
+  <script src="app.js?v=013"></script>
 </body>
 </html>

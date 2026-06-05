@@ -1,5 +1,5 @@
 ﻿const STORAGE_KEY = "budget-app-v1";
-const APP_VERSION = 17;
+const APP_VERSION = 18;
 const LOGO_VERSION = 4;
 const WRAP_CHARS = 68;
 const SEGMENT_LINES = 4;
@@ -53,6 +53,7 @@ const defaults = {
 };
 
 let state = loadState();
+let activeItemIndex = 0;
 
 const form = document.querySelector("#quoteForm");
 const itemsEl = document.querySelector("#items");
@@ -257,6 +258,7 @@ async function restoreDocumentFromFile(file) {
   const content = await file.text();
   const parsed = JSON.parse(content);
   state = normalizeState(parsed.state || parsed);
+  activeItemIndex = 0;
   saveState();
   fillForm();
 }
@@ -410,13 +412,22 @@ function syncNextNumber() {
 }
 
 function renderItemsEditor() {
+  activeItemIndex = Math.min(Math.max(activeItemIndex, 0), state.items.length - 1);
   itemsEl.replaceChildren();
   state.items.forEach((item, index) => {
     const node = itemTemplate.content.firstElementChild.cloneNode(true);
+    node.open = index === activeItemIndex;
     node.querySelector("[data-item-title]").textContent = `Concepto ${index + 1}`;
     node.querySelector('[data-field="description"]').value = item.description || "";
     node.querySelector('[data-field="quantity"]').value = item.quantity == null ? 1 : item.quantity;
     node.querySelector('[data-field="price"]').value = item.price == null ? 0 : item.price;
+    node.addEventListener("toggle", () => {
+      if (!node.open) return;
+      activeItemIndex = index;
+      itemsEl.querySelectorAll(".concept-foldout").forEach((other) => {
+        if (other !== node) other.open = false;
+      });
+    });
     node.querySelectorAll("[data-field]").forEach((field) => {
       field.addEventListener("input", () => {
         const key = field.dataset.field;
@@ -428,6 +439,7 @@ function renderItemsEditor() {
     node.querySelector(".remove-item").addEventListener("click", () => {
       state.items.splice(index, 1);
       if (!state.items.length) state.items.push({ description: "", quantity: 1, price: 0 });
+      activeItemIndex = Math.min(index, state.items.length - 1);
       saveState();
       renderItemsEditor();
       renderPreview();
@@ -564,7 +576,7 @@ function createPageHeader(pageNumber, docType) {
   );
 
   const right = createEl("div", "meta-right");
-  const headerLine = docType === "FACTURA"
+  const headerLine = docType === "FACTURA" || text(state.clientTaxId).trim()
     ? `CLIENTE:  N.I.F.: ${state.clientTaxId}    TEL.: ${state.clientPhone}`
     : `CLIENTE:      TELEFONO: ${state.clientPhone}`;
   const clientLines = [headerLine, state.clientName, state.clientInfo].filter((line) => text(line).length);
@@ -658,12 +670,12 @@ function createInvoiceFooter(totals) {
 
   const payment = createEl("div", "invoice-payment");
   payment.append(
-    createEl("div", "payment-labels", "Vencimiento:\nForma de pago:"),
-    createEl("div", "payment-values", `${formatDate(state.dueDate)}\n${state.paymentMethod}`),
+    createSummaryCell("Vencimiento", formatDate(state.dueDate)),
+    createSummaryCell("Forma de pago", state.paymentMethod),
     createSummaryCell("Entidad", state.bankEntity),
     createSummaryCell("Oficina", state.bankOffice),
     createSummaryCell("D.C.", state.bankControl),
-    createSummaryCell("Numero de Cuenta", state.bankAccount)
+    createSummaryCell("Número de Cuenta", state.bankAccount)
   );
 
   footer.append(summary, payment, createEl("p", "company-tax", state.companyTaxId ? `NIF ${state.companyTaxId}` : ""));
@@ -782,7 +794,9 @@ defaultLogoBtn.addEventListener("click", () => {
 });
 
 document.querySelector("#addItemBtn").addEventListener("click", () => {
+  syncItemsFromEditor();
   state.items.push({ description: "", quantity: 1, price: 0 });
+  activeItemIndex = state.items.length - 1;
   saveState();
   renderItemsEditor();
   renderPreview();
@@ -806,6 +820,7 @@ function createNewDocument(type) {
       [type]: nextNumber + 1
     }
   };
+  activeItemIndex = 0;
   saveState();
   fillForm();
 }
@@ -867,7 +882,7 @@ document.querySelector("#printBtn").addEventListener("click", () => {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="${getBaseUrl()}">
   <title>${fileName}</title>
-  <link rel="stylesheet" href="styles.css?v=012">
+  <link rel="stylesheet" href="styles.css?v=013">
   <style>
     @page { size: A4; margin: 0; }
     body { background: #fff; }

@@ -165,6 +165,83 @@ h1 {
   accent-color: var(--button);
 }
 
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 18px 0 10px;
+  color: #5b6470;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.section-title::before,
+.section-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #d8dee7;
+}
+
+.section-title span {
+  white-space: nowrap;
+}
+
+.section-foldout {
+  margin: 18px 0 14px;
+}
+
+.section-foldout > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #5b6470;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  list-style: none;
+  text-transform: uppercase;
+}
+
+.section-foldout > summary::-webkit-details-marker {
+  display: none;
+}
+
+.section-foldout > summary span {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 9px;
+  white-space: nowrap;
+}
+
+.section-foldout > summary span::before,
+.section-foldout > summary span::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #d8dee7;
+}
+
+.section-foldout > summary::after {
+  content: "+";
+  color: var(--button);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.section-foldout[open] > summary::after {
+  content: "-";
+}
+
+.section-foldout-body {
+  padding: 12px 0 0;
+}
+
 fieldset {
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -263,11 +340,51 @@ textarea {
   gap: 10px;
 }
 
+.concepts-panel {
+  margin-bottom: 14px;
+}
+
 .item-row {
   border: 1px solid #dfe5eb;
   border-radius: 8px;
-  padding: 10px;
   background: #fbfcfe;
+  overflow: hidden;
+}
+
+.concept-foldout > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  padding: 0 10px;
+  color: #26384c;
+  cursor: pointer;
+  font-weight: 700;
+  list-style: none;
+}
+
+.concept-foldout > summary::-webkit-details-marker {
+  display: none;
+}
+
+.concept-foldout > summary::after {
+  content: "+";
+  color: var(--button);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.concept-foldout[open] > summary {
+  border-bottom: 1px solid #e6ebf0;
+}
+
+.concept-foldout[open] > summary::after {
+  content: "-";
+}
+
+.concept-body {
+  padding: 10px;
 }
 
 .item-grid {
@@ -287,6 +404,10 @@ textarea {
 
 .wide {
   width: 100%;
+}
+
+#addItemBtn {
+  margin-top: 10px;
 }
 
 .preview-wrap {
@@ -660,21 +781,6 @@ textarea {
 
 .invoice-summary > div:last-child strong {
   white-space: nowrap;
-}
-
-.payment-labels {
-  align-items: flex-end;
-  justify-content: center;
-  text-align: right;
-  line-height: 1.55;
-  white-space: pre-line;
-}
-
-.payment-values {
-  align-items: flex-start;
-  justify-content: center;
-  line-height: 1.55;
-  text-align: left;
 }
 
 .invoice-payment > div,
