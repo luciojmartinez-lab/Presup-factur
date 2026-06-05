@@ -606,6 +606,8 @@ textarea {
 .lines .concept-cell {
   white-space: pre-wrap;
   padding: 3px 6px;
+  text-align: justify;
+  text-align-last: left;
 }
 
 .lines .num {

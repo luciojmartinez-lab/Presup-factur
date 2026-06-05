@@ -1,5 +1,5 @@
 ﻿const STORAGE_KEY = "budget-app-v1";
-const APP_VERSION = 26;
+const APP_VERSION = 27;
 const LOGO_VERSION = 4;
 const WRAP_CHARS = 56;
 const SEGMENT_LINES = 4;
@@ -510,29 +510,9 @@ function wrapLine(line, maxChars = WRAP_CHARS) {
   return lines;
 }
 
-function justifyLine(line, maxChars = WRAP_CHARS) {
-  const words = text(line).trim().split(/\s+/).filter(Boolean);
-  if (words.length < 2) return line;
-  const wordsLength = words.reduce((sum, word) => sum + word.length, 0);
-  const spacesNeeded = maxChars - wordsLength;
-  const gaps = words.length - 1;
-  if (spacesNeeded <= gaps) return line;
-  const baseSpaces = Math.floor(spacesNeeded / gaps);
-  let extraSpaces = spacesNeeded % gaps;
-  return words.reduce((result, word, index) => {
-    if (index === 0) return word;
-    const spaces = baseSpaces + (extraSpaces > 0 ? 1 : 0);
-    extraSpaces -= extraSpaces > 0 ? 1 : 0;
-    return `${result}${" ".repeat(spaces)}${word}`;
-  }, "");
-}
-
 function wrapDescription(value) {
   const rawLines = text(value).replace(/\r\n/g, "\n").split("\n");
-  const lines = rawLines.flatMap((line) => {
-    const wrapped = wrapLine(line);
-    return wrapped.map((wrappedLine, index) => (index < wrapped.length - 1 ? justifyLine(wrappedLine) : wrappedLine));
-  });
+  const lines = rawLines.flatMap((line) => wrapLine(line));
   return lines.length ? lines : [""];
 }
 
@@ -914,7 +894,7 @@ document.querySelector("#printBtn").addEventListener("click", () => {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="${getBaseUrl()}">
   <title>${fileName}</title>
-  <link rel="stylesheet" href="styles.css?v=021">
+  <link rel="stylesheet" href="styles.css?v=022">
   <style>
     @page { size: A4; margin: 0; }
     body { background: #fff; }
