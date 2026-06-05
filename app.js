@@ -1,9 +1,9 @@
 ﻿const STORAGE_KEY = "budget-app-v1";
-const APP_VERSION = 20;
+const APP_VERSION = 21;
 const LOGO_VERSION = 4;
 const WRAP_CHARS = 68;
 const SEGMENT_LINES = 4;
-const PAGE_FIT_SAFETY_PX = 8;
+const PAGE_FIT_TOLERANCE = 0;
 const DIRECTORY_DB_NAME = "presup-factur-directories";
 const DIRECTORY_STORE = "directories";
 const DIRECTORY_KEYS = {
@@ -700,7 +700,7 @@ function createDocumentPage(pageNumber, rows, options) {
 }
 
 function pageFits(sheet) {
-  return sheet.scrollHeight <= sheet.clientHeight - PAGE_FIT_SAFETY_PX;
+  return sheet.scrollHeight <= sheet.clientHeight + PAGE_FIT_TOLERANCE;
 }
 
 function sumAmounts(rows) {
@@ -889,7 +889,7 @@ document.querySelector("#printBtn").addEventListener("click", () => {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="${getBaseUrl()}">
   <title>${fileName}</title>
-  <link rel="stylesheet" href="styles.css?v=015">
+  <link rel="stylesheet" href="styles.css?v=016">
   <style>
     @page { size: A4; margin: 0; }
     body { background: #fff; }
