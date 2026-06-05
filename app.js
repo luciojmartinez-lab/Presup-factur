@@ -1,5 +1,5 @@
 ﻿const STORAGE_KEY = "budget-app-v1";
-const APP_VERSION = 18;
+const APP_VERSION = 19;
 const LOGO_VERSION = 4;
 const WRAP_CHARS = 68;
 const SEGMENT_LINES = 4;
@@ -576,10 +576,17 @@ function createPageHeader(pageNumber, docType) {
   );
 
   const right = createEl("div", "meta-right");
-  const headerLine = docType === "FACTURA" || text(state.clientTaxId).trim()
-    ? `CLIENTE:  N.I.F.: ${state.clientTaxId}    TEL.: ${state.clientPhone}`
-    : `CLIENTE:      TELEFONO: ${state.clientPhone}`;
-  const clientLines = [headerLine, state.clientName, state.clientInfo].filter((line) => text(line).length);
+  const clientTax = text(state.clientTaxId).trim();
+  const clientPhone = text(state.clientPhone).trim();
+  const identityParts = [
+    clientTax ? `N.I.F.: ${clientTax}` : "N.I.F.:",
+    clientPhone ? `TEL.: ${clientPhone}` : "TEL.:"
+  ];
+  const clientLines = [
+    `CLIENTE: ${state.clientName}`,
+    identityParts.join(" - "),
+    state.clientInfo
+  ].filter((line) => text(line).length);
   right.textContent = clientLines.join("\n");
 
   meta.append(left, right);
@@ -882,7 +889,7 @@ document.querySelector("#printBtn").addEventListener("click", () => {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="${getBaseUrl()}">
   <title>${fileName}</title>
-  <link rel="stylesheet" href="styles.css?v=013">
+  <link rel="stylesheet" href="styles.css?v=014">
   <style>
     @page { size: A4; margin: 0; }
     body { background: #fff; }
