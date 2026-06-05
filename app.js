@@ -1,5 +1,5 @@
 ﻿const STORAGE_KEY = "budget-app-v1";
-const APP_VERSION = 22;
+const APP_VERSION = 23;
 const LOGO_VERSION = 4;
 const WRAP_CHARS = 68;
 const SEGMENT_LINES = 4;
@@ -651,15 +651,14 @@ function createBudgetFooter(totals) {
     createTotalLine(`Importe I.V.A. ${formatRate(state.taxRate)} % :`, `${formatMoney(totals.tax)} Euros`),
     createTotalLine("IMPORTE TOTAL:", `${formatMoney(totals.total)} Euros`, "grand")
   );
-  const companyTax = createCompanyTaxNote();
-  if (companyTax.textContent) totalsBox.append(companyTax);
   signatures.append(accept, company, totalsBox);
-  footer.append(signatures);
+  footer.append(signatures, createCompanyTaxNote());
   return footer;
 }
 
 function createCompanyTaxNote() {
-  return createEl("p", "company-tax", state.companyTaxId ? `NIF ${state.companyTaxId}` : "");
+  const companyTaxId = text(state.companyTaxId).trim();
+  return createEl("p", "company-tax", companyTaxId ? `NIF ${companyTaxId}` : "");
 }
 
 function createSummaryCell(label, value) {
@@ -895,7 +894,7 @@ document.querySelector("#printBtn").addEventListener("click", () => {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="${getBaseUrl()}">
   <title>${fileName}</title>
-  <link rel="stylesheet" href="styles.css?v=017">
+  <link rel="stylesheet" href="styles.css?v=018">
   <style>
     @page { size: A4; margin: 0; }
     body { background: #fff; }
