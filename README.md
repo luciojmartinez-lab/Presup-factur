@@ -1,6 +1,6 @@
-# Presup-factur v023
+# Presup-factur v024
 
-Version actual: `presup-factur-v023`.
+Version actual: `presup-factur-v024`.
 
 Repositorio GitHub: `luciojmartinez-lab/Presup-factur`
 Proyecto Netlify: https://app.netlify.com/projects/presup-factur/overview
@@ -14,6 +14,10 @@ Abre `index.html` en el navegador, rellena los datos y pulsa `Imprimir PDF`. En 
 El nombre sugerido para el PDF usa el formato pedido: `P-65478` para presupuestos y `FRA-26082` para facturas.
 
 La app guarda los datos en el navegador con `localStorage`. Usa `Guardar` para guardar el documento actual como JSON con nombre `P-XXXXX` o `FRA-XXXXX`. En Chrome o Edge de escritorio puedes elegir una carpeta fija para presupuestos y otra para facturas desde `Carpetas de trabajo`; en otros navegadores se usa la descarga normal. Usa `Restaurar Presupuesto` o `Restaurar Factura` para cargar un JSON desde la carpeta correspondiente.
+
+## PWA
+
+La app incluye `manifest.json`, iconos de 192 y 512 px, `service-worker.js` y registro del service worker para poder instalarla desde Chrome Android como aplicacion independiente.
 
 ## Netlify
 

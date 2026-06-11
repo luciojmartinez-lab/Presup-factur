@@ -1,5 +1,5 @@
 ﻿const STORAGE_KEY = "budget-app-v1";
-const APP_VERSION = 28;
+const APP_VERSION = 29;
 const LOGO_VERSION = 4;
 const WRAP_CHARS = 56;
 const SEGMENT_LINES = 4;
@@ -898,7 +898,7 @@ document.querySelector("#printBtn").addEventListener("click", () => {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="${getBaseUrl()}">
   <title>${fileName}</title>
-  <link rel="stylesheet" href="styles.css?v=023">
+  <link rel="stylesheet" href="styles.css?v=024">
   <style>
     @page { size: A4; margin: 0; }
     body { background: #fff; }
@@ -928,3 +928,20 @@ document.querySelector("#printBtn").addEventListener("click", () => {
 saveState();
 fillForm();
 updateDirectoryStatuses();
+registerServiceWorker();
+
+function registerServiceWorker() {
+  if (!("serviceWorker" in navigator)) return;
+
+  const register = () => {
+    navigator.serviceWorker.register("/service-worker.js", { scope: "/" }).catch((error) => {
+      console.warn("No se pudo registrar el service worker.", error);
+    });
+  };
+
+  if (document.readyState === "complete") {
+    register();
+  } else {
+    window.addEventListener("load", register, { once: true });
+  }
+}
